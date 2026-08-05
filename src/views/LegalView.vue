@@ -3,7 +3,7 @@
     <router-link to="/" class="back-link">← {{ $t('backHome') }}</router-link>
     <div class="legal-card">
       <h1>{{ isPrivacy ? $t('privacyTitle') : $t('termsTitle') }}</h1>
-      <p class="legal-updated">{{ $t('legalUpdated') }}: 2026-08-05</p>
+      <p class="legal-updated">{{ $t('legalUpdated') }}: 2026-08-05 · v{{ isPrivacy ? legalV.privacy : legalV.terms }}</p>
       <div class="legal-body" v-html="body"></div>
     </div>
   </div>
@@ -13,9 +13,11 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { LEGAL_VERSION } from '../utils/legal.js'
 
 const route = useRoute()
 const { t } = useI18n()
+const legalV = LEGAL_VERSION
 const isPrivacy = computed(() => route.name === 'privacy')
 
 // 用 v-html 渲染条款正文；内容由 i18n 提供（中英）

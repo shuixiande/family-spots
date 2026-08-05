@@ -38,6 +38,7 @@ import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { signInWithEmail, signUpWithEmail, signInWithOAuth, ensureSession, currentUserId } from '../utils/auth.js'
+import { recordLegalConsent } from '../utils/legal.js'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -58,6 +59,8 @@ async function submit() {
   msg.value = ''
   try {
     if (isSignUp.value) {
+      // 勾选 agreeGuardian 即同意当前版本条款，注册成功时记录
+      recordLegalConsent()
       const data = await signUpWithEmail(email.value, password.value)
       if (data.session) router.push(route.query.redirect || '/')
       else msg.value = t('checkEmail')

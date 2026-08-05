@@ -300,6 +300,7 @@ a { text-decoration: none; color: inherit; }
 }
 .safety-modal-actions .btn-primary { flex: 1.6; }
 .safety-modal-actions .btn-secondary { flex: 1; }
+.legal-version { font-size: 12px; color: #888; margin-top: 12px; line-height: 1.7; }
 
 /* OSM 弹窗内"补充"按钮 */
 .osm-popup { font-size: 13px; line-height: 1.7; }
