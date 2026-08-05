@@ -52,7 +52,7 @@
       <button class="safety-close" @click="showSafety = false" aria-label="close">✕</button>
       <h3>{{ $t('safetyTitle') }}</h3>
       <ul class="safety-rules">
-        <li v-for="(rule, i) in $t('safetyRules')" :key="i">{{ rule }}</li>
+        <li v-for="(rule, i) in tm('safetyRules')" :key="i">{{ rule }}</li>
       </ul>
       <h4>{{ $t('disclaimerTitle') }}</h4>
       <p class="safety-disclaimer">{{ $t('safetyDisclaimer') }}</p>
@@ -74,7 +74,7 @@ import { CATEGORY_META, fetchOsmSpots, nominatimSearch } from '../utils/osm.js'
 import { initMap, addOsmMarkers, addUserMarkers, clearLayer, locateUser, flyTo, toDisplay, fromDisplay, ensureTileProvider } from '../utils/map.js'
 import { fetchSpots } from '../services/spots.js'
 
-const { t } = useI18n()
+const { t, tm } = useI18n()
 const categories = CATEGORY_META
 
 const router = useRouter()

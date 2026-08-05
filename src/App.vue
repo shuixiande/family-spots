@@ -30,7 +30,7 @@
           <h3>{{ $t('safetyModalTitle') }}</h3>
           <p class="safety-modal-intro">{{ $t('safetyModalIntro') }}</p>
           <ul class="safety-rules">
-            <li v-for="(rule, i) in $t('safetyRules')" :key="i">{{ rule }}</li>
+            <li v-for="(rule, i) in tm('safetyRules')" :key="i">{{ rule }}</li>
           </ul>
           <h4>{{ $t('disclaimerTitle') }}</h4>
           <p class="safety-disclaimer">{{ $t('safetyDisclaimer') }}</p>
@@ -53,7 +53,7 @@ import { dataMode, isModerator } from './services/spots.js'
 import { currentUser, signOut, ensureSession } from './utils/auth.js'
 import { LEGAL_VERSION, needLegalReconsent, recordLegalConsent } from './utils/legal.js'
 
-const { t, locale } = useI18n()
+const { t, tm, locale } = useI18n()
 const mode = dataMode()
 const cloud = mode === 'cloud'
 const mod = ref(false)
