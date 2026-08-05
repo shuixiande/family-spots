@@ -36,7 +36,7 @@ export const messages = {
       '注意防晒防暑、防蚊虫叮咬，自备饮用水与必要应急物资'
     ],
     disclaimerTitle: '免责声明',
-    safetyDisclaimer: '本平台地点信息来源于 OpenStreetMap 种子数据与社区用户贡献，未经专业机构核验；地图上的安全等级、水深、流速等信息为用户主观标注，仅供参考，不构成任何安全保证或专业建议。使用者应自行核实现场情况并风险自负，平台不对任何户外活动导致的人身或财产损失承担责任。',
+    safetyDisclaimer: '本平台地点信息来源于 OpenStreetMap 种子数据与社区用户贡献，未经专业机构核验；地图上的安全等级、水深、流速等信息为用户主观标注，仅供参考，不构成任何安全保证或专业建议。使用者应自行核实现场情况，自行承担户外活动的风险。',
     dataAttribution: '地图数据 © OpenStreetMap contributors · 高德地图，按各自许可协议使用',
     safetyModalTitle: '安全须知确认',
     safetyModalIntro: '使用撒欢地图前，请确认你已阅读并了解以下安全须知与免责声明：',
@@ -52,11 +52,13 @@ export const messages = {
 <p>2.1 用户对其提交的所有内容（包括但不限于地点名称、坐标、描述、安全信息、评分、图片等）的真实性、准确性、合法性负全部责任。</p>
 <p>2.2 禁止提交以下内容：虚假或误导性信息；涉及国家秘密、军事设施、敏感区域的信息；违法、色情、暴力、仇恨或侵犯他人合法权益的内容；广告或商业推广信息。</p>
 <p>2.3 用户授予平台及其社区在服务范围内使用、展示、分发其贡献内容的权利，用于提供和改进本服务。</p>
+<p><strong>2.4 平台有权对违反本条款或法律法规的内容，采取警告、删除、下架、限制或停止提供服务等措施。</strong></p>
 <h2>3. 信息仅供参考</h2>
-<p>平台上的地点与安全信息由 OpenStreetMap 公开数据与社区用户提供，未经专业机构核验，仅供参考，不构成任何安全保证或专业建议。用户应自行核实现场情况，并独立判断是否适合前往。</p>
-<h2>4. 免责声明</h2>
-<p>4.1 户外活动存在固有风险。平台不对因使用本服务或前往地图标注地点而导致的任何人身伤害、财产损失或其他损害承担责任。</p>
-<p>4.2 平台不对第三方服务（包括但不限于地图数据提供商、网络基础设施）的可用性、准确性负责。</p>
+<p>平台上的地点与安全信息由 OpenStreetMap 公开数据与社区用户提供，未经专业机构核验，仅供参考，<strong>不构成任何安全保证、认证或专业建议</strong>。用户应自行核实现场情况，并独立判断是否适合前往。</p>
+<h2>4. 免责声明与责任限制</h2>
+<p><strong>4.1 户外活动存在固有风险。本平台提供的信息仅供参考，不构成对任何地点安全性的保证或承诺。用户自愿使用本服务并自行承担户外活动的风险。</strong></p>
+<p>4.2 在法律允许的最大范围内，除因本平台故意或重大过失导致的情形外，本平台不对因使用本服务或依据平台信息前往目的地而产生的间接损失承担责任。本条款的任何内容均不排除或限制依法不得排除或限制的责任。</p>
+<p>4.3 平台不对第三方服务（包括但不限于地图数据提供商、网络基础设施）的可用性、准确性负责。</p>
 <h2>5. 账户与安全</h2>
 <p>用户应妥善保管账户凭证。如发现账户被未经授权使用，应及时通知平台。</p>
 <h2>6. 知识产权</h2>
@@ -69,16 +71,18 @@ export const messages = {
 <h2>1. 我们收集的信息</h2>
 <p>1.1 账户信息：注册时提供的邮箱地址。</p>
 <p>1.2 用户贡献内容：您标注的地点信息（名称、坐标、描述、安全信息等）。</p>
-<p>1.3 技术信息：为提供服务所必需的基本信息，如设备类型、浏览器、访问日志。</p>
+<p>1.3 技术信息：由托管平台（如 Vercel）自动记录的设备类型、浏览器、访问日志等基本技术数据。</p>
 <h2>2. 信息的使用</h2>
-<p>我们使用上述信息用于：提供并改进服务；展示您贡献的地点信息；防止滥用和欺诈；在法律允许的范围内处理与安全相关的事项。</p>
+<p>我们遵循<b>最小必要</b>原则，仅使用上述信息用于：提供并改进服务；展示您贡献的地点信息；防止滥用和欺诈；在法律允许的范围内处理与安全相关的事项。</p>
 <h2>3. 信息的共享</h2>
 <p>3.1 您贡献的地点信息将在平台内公开展示（这是本服务的核心功能）。</p>
 <p>3.2 除上述情况外，我们不会出售、出租或向无关第三方披露您的个人信息，除非：（a）获得您的明确同意；（b）法律法规要求；（c）为保护平台及用户合法权益所必需。</p>
-<h2>4. 第三方服务</h2>
-<p>本服务使用以下第三方服务：OpenStreetMap / Overpass / Nominatim（地图与地名数据）、高德地图（中国大陆瓦片）、Supabase（数据存储与认证）。这些服务有其各自的隐私政策。</p>
+<h2>4. 第三方服务与数据存储</h2>
+<p>4.1 本服务使用以下第三方服务：OpenStreetMap / Overpass / Nominatim（地图与地名数据）、高德地图（中国大陆瓦片）、Supabase（数据存储与认证）。这些服务有其各自的隐私政策。</p>
+<p>4.2 您的数据可能存储于中国境外（如 Supabase 位于海外的服务器）。跨境传输将遵守适用的法律法规，并采取必要的安全保护措施。</p>
 <h2>5. 未成年人保护</h2>
-<p>本服务面向家长和成年人使用，不面向 14 周岁以下未成年人。您在使用本服务时须确认自己是成年人或未成年人的监护人。我们不会故意收集未成年人的个人信息。</p>
+<p>5.1 本服务面向家长和成年人使用。<b>不满 14 周岁的未成年人不得自行注册账户或提交个人信息</b>；如您是未成年人的家长或法定监护人，可代为使用本服务并提供经您同意或由您本人提交的信息。</p>
+<p>5.2 如我们发现未经监护人同意收集了不满 14 周岁未成年人的个人信息，将依法尽快删除。监护人可通过下文联系方式要求删除相关数据。</p>
 <h2>6. 数据保留与删除</h2>
 <p>您可以通过登录账户后编辑或删除自己贡献的地点信息。如需删除账户或数据，可通过项目 GitHub 仓库联系我们。</p>
 <h2>7. 安全措施</h2>
@@ -220,7 +224,7 @@ export const messages = {
       'Protect against sun and heat, insect bites; carry drinking water and basic emergency supplies'
     ],
     disclaimerTitle: 'Disclaimer',
-    safetyDisclaimer: 'Spot data on this platform comes from OpenStreetMap seed data and community contributions, and has not been verified by professional bodies. Safety ratings, depth, flow and other information are subjective user input, provided for reference only — they are not a safety guarantee or professional advice. Users must verify on-site conditions and assume all risks; the platform is not liable for any personal injury or property loss arising from outdoor activities.',
+    safetyDisclaimer: 'Spot data on this platform comes from OpenStreetMap seed data and community contributions, and has not been verified by professional bodies. Safety ratings, depth, flow and other information are subjective user input, provided for reference only — they are not a safety guarantee or professional advice. Users must verify on-site conditions and assume the risks of outdoor activities themselves.',
     dataAttribution: 'Map data © OpenStreetMap contributors · AMap, used under their respective licenses',
     safetyModalTitle: 'Safety Notice',
     safetyModalIntro: 'Before using FamilySpots, please confirm you have read and understood the following safety rules and disclaimer:',
@@ -236,11 +240,13 @@ export const messages = {
 <p>2.1 Users are solely responsible for the truthfulness, accuracy and legality of all content they submit (including spot name, coordinates, description, safety info, rating, images, etc.).</p>
 <p>2.2 The following content is prohibited: false or misleading information; information involving state secrets, military facilities or sensitive areas; illegal, pornographic, violent, hateful or infringing content; advertising or commercial promotion.</p>
 <p>2.3 Users grant the platform and its community the right to use, display and distribute their contributions for the purpose of providing and improving the service.</p>
+<p><strong>2.4 The platform may warn, delete, delist, restrict or suspend content that violates these terms or applicable laws.</strong></p>
 <h2>3. Information Is For Reference Only</h2>
-<p>Spot and safety information on the platform comes from OpenStreetMap public data and community contributors, and has not been verified by professional bodies. It is for reference only and does not constitute a safety guarantee or professional advice. Users must verify on-site conditions and decide independently whether a place is suitable.</p>
-<h2>4. Disclaimer</h2>
-<p>4.1 Outdoor activities involve inherent risks. The platform is not liable for any personal injury, property loss or other damage arising from the use of this service or from visiting places marked on the map.</p>
-<p>4.2 The platform is not responsible for the availability or accuracy of third-party services (including map data providers and network infrastructure).</p>
+<p>Spot and safety information on the platform comes from OpenStreetMap public data and community contributors, and has not been verified by professional bodies. It is for reference only and <strong>does not constitute any safety certification, guarantee or professional advice</strong>. Users must verify on-site conditions and decide independently whether a place is suitable.</p>
+<h2>4. Disclaimer & Limitation of Liability</h2>
+<p><strong>4.1 Outdoor activities involve inherent risks. The platform provides information for reference only and does not warrant or guarantee the safety of any location. Users voluntarily use the service and assume all risks of outdoor activities.</strong></p>
+<p>4.2 To the maximum extent permitted by law, except where caused by the platform's intentional misconduct or gross negligence, the platform is not liable for indirect losses arising from the use of the service or from relying on platform information to visit destinations. Nothing in these terms excludes or limits liability that may not be excluded or limited by law.</p>
+<p>4.3 The platform is not responsible for the availability or accuracy of third-party services (including map data providers and network infrastructure).</p>
 <h2>5. Accounts & Security</h2>
 <p>Users must safeguard their account credentials. If unauthorized use is discovered, notify the platform promptly.</p>
 <h2>6. Intellectual Property</h2>
@@ -253,16 +259,18 @@ export const messages = {
 <h2>1. Information We Collect</h2>
 <p>1.1 Account information: the email address provided at registration.</p>
 <p>1.2 User contributions: spot information you pin (name, coordinates, description, safety info, etc.).</p>
-<p>1.3 Technical information: basic data required to provide the service, such as device type, browser and access logs.</p>
+<p>1.3 Technical information: basic technical data automatically recorded by the hosting platform (e.g., Vercel), such as device type, browser and access logs.</p>
 <h2>2. How We Use Information</h2>
-<p>We use the above information to: provide and improve the service; display your contributed spots; prevent abuse and fraud; and handle safety-related matters where permitted by law.</p>
+<p>We follow the <b>data minimization</b> principle and use the above information only to: provide and improve the service; display your contributed spots; prevent abuse and fraud; and handle safety-related matters where permitted by law.</p>
 <h2>3. Sharing of Information</h2>
 <p>3.1 Spot information you contribute will be displayed publicly on the platform (this is the core function of the service).</p>
 <p>3.2 Except as above, we do not sell, rent or disclose your personal information to unrelated third parties unless: (a) we have your explicit consent; (b) required by law; or (c) necessary to protect the legitimate rights of the platform and its users.</p>
-<h2>4. Third-Party Services</h2>
-<p>This service uses the following third parties: OpenStreetMap / Overpass / Nominatim (map and geocoding data), AMap (map tiles for mainland China), and Supabase (data storage and authentication). These services have their own privacy policies.</p>
+<h2>4. Third-Party Services & Data Storage</h2>
+<p>4.1 This service uses the following third parties: OpenStreetMap / Overpass / Nominatim (map and geocoding data), AMap (map tiles for mainland China), and Supabase (data storage and authentication). These services have their own privacy policies.</p>
+<p>4.2 Your data may be stored outside mainland China (e.g., on Supabase servers located overseas). Any cross-border transfer will comply with applicable laws and be protected by appropriate safeguards.</p>
 <h2>5. Protection of Minors</h2>
-<p>This service is intended for parents and adults, not for minors under 14. By using this service you confirm that you are an adult or the guardian of a minor. We do not knowingly collect personal information from minors.</p>
+<p>5.1 This service is intended for parents and adults. <b>Minors under 14 must not register an account or submit personal information themselves.</b> If you are the parent or legal guardian of a minor, you may use the service on their behalf and submit information with your consent.</p>
+<p>5.2 If we become aware that personal information of a minor under 14 has been collected without guardian consent, we will delete it promptly. Guardians may request deletion via the contact channels below.</p>
 <h2>6. Data Retention & Deletion</h2>
 <p>You can edit or delete spots you have contributed after signing in. To delete your account or data, contact us via the project repository.</p>
 <h2>7. Security</h2>

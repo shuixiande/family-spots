@@ -39,4 +39,7 @@ const body = computed(() => {
 .legal-body p { margin-bottom: 10px; }
 .legal-body li { margin-bottom: 4px; margin-left: 20px; }
 .legal-body a { color: #1890ff; }
+/* 免责/责任限制等重大条款：加粗+高亮，履行格式条款提示义务 */
+.legal-body strong { color: #d48806; background: #fffbe6; padding: 1px 4px; border-radius: 3px; }
+.legal-body b { color: #333; }
 </style>
