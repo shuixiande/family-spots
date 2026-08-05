@@ -44,6 +44,21 @@
 
     <div class="map-loading" v-if="loading">{{ $t('loading') }}</div>
 
+    <!-- 安全须知与免责声明 -->
+    <button class="safety-toggle" @click="showSafety = !showSafety">
+      ⚠️ {{ $t('safety') }}
+    </button>
+    <div class="safety-panel" v-if="showSafety">
+      <button class="safety-close" @click="showSafety = false" aria-label="close">✕</button>
+      <h3>{{ $t('safetyTitle') }}</h3>
+      <ul class="safety-rules">
+        <li v-for="(rule, i) in $t('safetyRules')" :key="i">{{ rule }}</li>
+      </ul>
+      <h4>{{ $t('disclaimerTitle') }}</h4>
+      <p class="safety-disclaimer">{{ $t('safetyDisclaimer') }}</p>
+      <p class="safety-attribution">{{ $t('dataAttribution') }}</p>
+    </div>
+
     <router-link to="/add" class="fab-btn" title="标记新地点">
       <span>+</span>
       <span class="fab-label">{{ $t('mark') }}</span>
@@ -68,6 +83,7 @@ const showFilter = ref(false)
 const activeCats = reactive({ water: true, mountain: true, park: true, playground: true })
 const kidOnly = ref(false)
 const loading = ref(false)
+const showSafety = ref(false)
 
 const osmSpots = ref([])
 const userSpots = ref([])

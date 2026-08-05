@@ -26,6 +26,18 @@ export const messages = {
     locateFail: '定位失败，请检查浏览器位置权限',
     notFound: '未找到该地点',
     searchFail: '搜索失败，请稍后重试',
+    safety: '安全须知',
+    safetyTitle: '安全须知与免责声明',
+    safetyRules: [
+      '户外活动安全第一：家长/监护人须全程看护孩子，切勿让孩子单独涉水或离开视线',
+      '玩水前请确认水深、流速与天气，警惕山洪、上游泄洪与暗流漩涡',
+      '出发前查询当地公告、天气与预警信息，以官方渠道为准；恶劣天气请勿前往',
+      '安全等级为高风险的区域，不建议携带幼童前往；野地、陡坡请勿攀爬',
+      '注意防晒防暑、防蚊虫叮咬，自备饮用水与必要应急物资'
+    ],
+    disclaimerTitle: '免责声明',
+    safetyDisclaimer: '本平台地点信息来源于 OpenStreetMap 种子数据与社区用户贡献，未经专业机构核验；地图上的安全等级、水深、流速等信息为用户主观标注，仅供参考，不构成任何安全保证或专业建议。使用者应自行核实现场情况并风险自负，平台不对任何户外活动导致的人身或财产损失承担责任。',
+    dataAttribution: '地图数据 © OpenStreetMap contributors · 高德地图，按各自许可协议使用',
 
     // 添加页
     addTitle: '标记户外地点',
@@ -150,6 +162,18 @@ export const messages = {
     locateFail: 'Location failed. Please check browser location permission.',
     notFound: 'Place not found',
     searchFail: 'Search failed, please retry later',
+    safety: 'Safety',
+    safetyTitle: 'Safety Rules & Disclaimer',
+    safetyRules: [
+      'Outdoor activities are risky: parents/guardians must supervise children at all times — never let children near water alone or out of sight',
+      'Before entering water, check depth, flow and weather; beware of flash floods, upstream dam releases and hidden currents',
+      'Check local notices, weather and warnings before you go; trust official sources only and avoid bad weather',
+      'Do not take young children to high-risk areas; do not climb wild terrain or steep slopes',
+      'Protect against sun and heat, insect bites; carry drinking water and basic emergency supplies'
+    ],
+    disclaimerTitle: 'Disclaimer',
+    safetyDisclaimer: 'Spot data on this platform comes from OpenStreetMap seed data and community contributions, and has not been verified by professional bodies. Safety ratings, depth, flow and other information are subjective user input, provided for reference only — they are not a safety guarantee or professional advice. Users must verify on-site conditions and assume all risks; the platform is not liable for any personal injury or property loss arising from outdoor activities.',
+    dataAttribution: 'Map data © OpenStreetMap contributors · AMap, used under their respective licenses',
 
     addTitle: 'Add an outdoor spot',
     desc: 'A UGC crowdsourced map — every parent is an explorer. Pin the family-friendly outdoor places you discover to help more families find safe, fun destinations.',
