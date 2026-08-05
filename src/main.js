@@ -13,6 +13,8 @@ const router = createRouter({
     { path: '/add', component: () => import('./views/AddSpot.vue') },
     { path: '/login', component: () => import('./views/AuthView.vue') },
     { path: '/moderate', component: () => import('./views/ModerateView.vue') },
+    { path: '/terms', name: 'terms', component: () => import('./views/LegalView.vue') },
+    { path: '/privacy', name: 'privacy', component: () => import('./views/LegalView.vue') },
     { path: '/:pathMatch(.*)*', redirect: '/' }
   ]
 })

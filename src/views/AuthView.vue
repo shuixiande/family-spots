@@ -11,6 +11,14 @@
         <label>{{ $t('password') }}</label>
         <input v-model="password" type="password" required minlength="6" :placeholder="$t('password')" />
       </div>
+      <label v-if="isSignUp" class="check-row" style="align-items:flex-start;margin-bottom:16px">
+        <input type="checkbox" v-model="agreeTerms" required style="margin-top:3px" />
+        <span style="font-size:13px;line-height:1.6">
+          {{ $t('agreeGuardian') }}
+          <router-link to="/terms" style="color:#1890ff">{{ $t('termsTitle') }}</router-link> ·
+          <router-link to="/privacy" style="color:#1890ff">{{ $t('privacyTitle') }}</router-link>
+        </span>
+      </label>
       <button type="submit" class="btn-primary">{{ isSignUp ? $t('signUp') : $t('signIn') }}</button>
       <p v-if="msg" class="save-msg" style="color:#fa8c16">{{ msg }}</p>
       <button type="button" class="btn-secondary" style="margin-top:12px;width:100%" @click="isSignUp = !isSignUp">
@@ -38,6 +46,7 @@ const email = ref('')
 const password = ref('')
 const msg = ref('')
 const isSignUp = ref(false)
+const agreeTerms = ref(false)
 
 onMounted(async () => {
   // OAuth/邮箱确认回调返回时已建立会话，直接跳转

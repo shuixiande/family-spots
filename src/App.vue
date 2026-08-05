@@ -18,6 +18,10 @@
       <router-view />
       <div class="disclaimer">
         {{ $t('disclaimer') }}
+        <span class="legal-links">
+          · <router-link to="/terms">{{ $t('termsTitle') }}</router-link>
+          · <router-link to="/privacy">{{ $t('privacyTitle') }}</router-link>
+        </span>
       </div>
 
       <!-- 首次访问：安全须知同意弹窗 -->
