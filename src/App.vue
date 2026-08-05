@@ -19,6 +19,24 @@
       <div class="disclaimer">
         {{ $t('disclaimer') }}
       </div>
+
+      <!-- 首次访问：安全须知同意弹窗 -->
+      <div v-if="showSafetyModal" class="safety-modal-mask">
+        <div class="safety-modal">
+          <h3>{{ $t('safetyModalTitle') }}</h3>
+          <p class="safety-modal-intro">{{ $t('safetyModalIntro') }}</p>
+          <ul class="safety-rules">
+            <li v-for="(rule, i) in $t('safetyRules')" :key="i">{{ rule }}</li>
+          </ul>
+          <h4>{{ $t('disclaimerTitle') }}</h4>
+          <p class="safety-disclaimer">{{ $t('safetyDisclaimer') }}</p>
+          <p class="safety-attribution">{{ $t('dataAttribution') }}</p>
+          <div class="safety-modal-actions">
+            <button class="btn-primary" @click="agreeSafety">{{ $t('safetyAgree') }}</button>
+            <button class="btn-secondary" @click="browseOnly">{{ $t('safetyBrowseOnly') }}</button>
+          </div>
+        </div>
+      </div>
   </div>
 </template>
 
@@ -33,10 +51,39 @@ const { t, locale } = useI18n()
 const mode = dataMode()
 const cloud = mode === 'cloud'
 const mod = ref(false)
+
+// 安全须知同意弹窗：首次访问自动弹出，同意后持久化记录（含版本号与时间戳）
+const SAFETY_AGREE_KEY = 'family-spots:safety-agreed'
+const SAFETY_VERSION = 1
+const showSafetyModal = ref(false)
+
 onMounted(async () => {
   await ensureSession()
   mod.value = await isModerator()
+  checkSafetyAgreement()
 })
+
+function checkSafetyAgreement() {
+  if (typeof localStorage === 'undefined') return
+  try {
+    const raw = localStorage.getItem(SAFETY_AGREE_KEY)
+    const rec = raw ? JSON.parse(raw) : null
+    if (!rec || rec.v !== SAFETY_VERSION) showSafetyModal.value = true
+  } catch (e) {
+    showSafetyModal.value = true
+  }
+}
+
+function agreeSafety() {
+  try {
+    localStorage.setItem(SAFETY_AGREE_KEY, JSON.stringify({ v: SAFETY_VERSION, t: Date.now() }))
+  } catch (e) { /* 隐私模式等场景忽略 */ }
+  showSafetyModal.value = false
+}
+
+function browseOnly() {
+  showSafetyModal.value = false
+}
 
 async function doSignOut() {
   await signOut()

@@ -38,6 +38,10 @@ export const messages = {
     disclaimerTitle: '免责声明',
     safetyDisclaimer: '本平台地点信息来源于 OpenStreetMap 种子数据与社区用户贡献，未经专业机构核验；地图上的安全等级、水深、流速等信息为用户主观标注，仅供参考，不构成任何安全保证或专业建议。使用者应自行核实现场情况并风险自负，平台不对任何户外活动导致的人身或财产损失承担责任。',
     dataAttribution: '地图数据 © OpenStreetMap contributors · 高德地图，按各自许可协议使用',
+    safetyModalTitle: '安全须知确认',
+    safetyModalIntro: '使用撒欢地图前，请确认你已阅读并了解以下安全须知与免责声明：',
+    safetyAgree: '我已阅读并同意',
+    safetyBrowseOnly: '本次仅浏览',
 
     // 添加页
     addTitle: '标记户外地点',
@@ -174,6 +178,10 @@ export const messages = {
     disclaimerTitle: 'Disclaimer',
     safetyDisclaimer: 'Spot data on this platform comes from OpenStreetMap seed data and community contributions, and has not been verified by professional bodies. Safety ratings, depth, flow and other information are subjective user input, provided for reference only — they are not a safety guarantee or professional advice. Users must verify on-site conditions and assume all risks; the platform is not liable for any personal injury or property loss arising from outdoor activities.',
     dataAttribution: 'Map data © OpenStreetMap contributors · AMap, used under their respective licenses',
+    safetyModalTitle: 'Safety Notice',
+    safetyModalIntro: 'Before using FamilySpots, please confirm you have read and understood the following safety rules and disclaimer:',
+    safetyAgree: 'I have read and agree',
+    safetyBrowseOnly: 'Browse only this time',
 
     addTitle: 'Add an outdoor spot',
     desc: 'A UGC crowdsourced map — every parent is an explorer. Pin the family-friendly outdoor places you discover to help more families find safe, fun destinations.',
