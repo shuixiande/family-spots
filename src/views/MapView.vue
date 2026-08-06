@@ -63,6 +63,7 @@
       <span>+</span>
       <span class="fab-label">{{ $t('mark') }}</span>
     </router-link>
+    <div class="fab-hint">{{ $t('dblHint') }}</div>
   </div>
 </template>
 
@@ -84,6 +85,7 @@ const activeCats = reactive({ water: true, mountain: true, park: true, playgroun
 const kidOnly = ref(false)
 const loading = ref(false)
 const showSafety = ref(false)
+let hintTimer = null
 
 const osmSpots = ref([])
 const userSpots = ref([])
@@ -115,6 +117,13 @@ function renderAll() { renderOsm(); renderUser() }
 
 function onContribute(s) {
   router.push('/add?lat=' + s.lat + '&lng=' + s.lng + '&name=' + encodeURIComponent(s.name) + '&category=' + s.category)
+}
+
+// 鼠标双击地图任意位置 -> 取显示坐标(WGS-84) -> 打开标记页
+function onDblClick(e) {
+  const [lat, lng] = fromDisplay(mapObj, e.latlng.lat, e.latlng.lng)
+  clearTimeout(hintTimer)
+  router.push('/add?lat=' + lat.toFixed(6) + '&lng=' + lng.toFixed(6) + '&from=map')
 }
 
 function toggleCat(key) {
@@ -184,6 +193,9 @@ onMounted(async () => {
   mapObj = await initMap('map-view')
   await loadUser()
   await loadOsm()
+  // 双击地图标记新地点（关闭默认双击缩放以避免与标记行为冲突）
+  mapObj.doubleClickZoom.disable()
+  mapObj.on('dblclick', onDblClick)
   mapObj.on('moveend', () => {
     clearTimeout(loadTimer)
     loadTimer = setTimeout(() => {
@@ -198,6 +210,7 @@ onMounted(async () => {
 
 onBeforeUnmount(() => {
   clearTimeout(loadTimer)
+  clearTimeout(hintTimer)
   if (mapObj) { mapObj.remove(); mapObj = null }
 })
 </script>
