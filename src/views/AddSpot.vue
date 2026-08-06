@@ -10,12 +10,13 @@
         <h3>{{ $t('basic') }}</h3>
         <div class="form-row">
           <div class="form-group">
-            <label>{{ $t('name') }} *</label>
-            <input v-model="form.name" required :placeholder="$t('namePh')" />
+            <label>{{ $t('name') }} <span class="opt-tag">{{ $t('optional') }}</span></label>
+            <input v-model="form.name" :placeholder="$t('namePh')" />
           </div>
           <div class="form-group">
-            <label>{{ $t('category') }}</label>
+            <label>{{ $t('category') }} *</label>
             <select v-model="form.category">
+              <option value="">{{ $t('typeAny') }}</option>
               <option value="water">{{ $t('catWater') }}</option>
               <option value="mountain">{{ $t('catMountain') }}</option>
               <option value="park">{{ $t('catPark') }}</option>
@@ -25,20 +26,21 @@
         </div>
 
         <div class="form-group">
-          <label>{{ $t('address') }}</label>
+          <label>{{ $t('address') }} <span class="primary-tag">★ {{ $t('primary') }}</span></label>
           <input v-model="form.address" :placeholder="$t('addressPh')" />
+          <p class="field-hint">📍 {{ $t('addressAuto') }}</p>
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label>{{ $t('type') }}</label>
+            <label>{{ $t('type') }} *</label>
             <select v-model="form.subtype">
               <option value="">{{ $t('typeAny') }}</option>
               <option v-for="t in subtypeOptions" :key="t.value" :value="t.value">{{ $t(t.labelKey) }}</option>
             </select>
           </div>
           <div class="form-group">
-            <label>{{ $t('freePaid') }}</label>
+            <label>{{ $t('freePaid') }} *</label>
             <select v-model="form.freeOrPaid">
               <option value="">{{ $t('any') }}</option>
               <option value="free">{{ $t('free') }}</option>
@@ -57,7 +59,7 @@
         <h3>{{ $t('safety') }}</h3>
         <div class="form-row">
           <div class="form-group">
-            <label>{{ $t('riskLevel') }}</label>
+            <label>{{ $t('riskLevel') }} *</label>
             <select v-model="form.riskLevel">
               <option value="">{{ $t('any') }}</option>
               <option value="low">{{ $t('riskLow') }}</option>
@@ -199,7 +201,7 @@ let pickerMarker = null
 
 function getEmptyForm() {
   return {
-    name: '', address: '', category: 'park', subtype: '', freeOrPaid: '',
+    name: '', address: '', category: '', subtype: '', freeOrPaid: '',
     feeDesc: '', suitableAge: '', riskLevel: '', kidFriendly: true,
     waterQuality: '', waterDepth: '', flowSpeed: '', facilities: [],
     rating: 4.0, lng: '', lat: ''
@@ -211,11 +213,17 @@ async function refreshMySpots() {
 }
 
 function buildPayload() {
-  return { ...form.value }
+  const p = { ...form.value }
+  // 名称为选填：缺省时回退到地址或「未命名地点」，保证地图标记/列表有可读标题
+  p.name = (p.name && p.name.trim()) || (p.address && p.address.trim()) || t('unnamed')
+  return p
 }
 
 async function saveSpot() {
-  if (!form.value.name) { saveMsg.value = t('needName'); return }
+  if (!form.value.category) { saveMsg.value = t('needCategory'); return }
+  if (!form.value.subtype) { saveMsg.value = t('needSubtype'); return }
+  if (!form.value.freeOrPaid) { saveMsg.value = t('needFreePaid'); return }
+  if (!form.value.riskLevel) { saveMsg.value = t('needRisk'); return }
   if (mode === 'cloud' && !currentUser.value) { saveMsg.value = t('needLogin'); router.push('/login?redirect=/add'); return }
   const lng = parseFloat(form.value.lng), lat = parseFloat(form.value.lat)
   if (!Number.isFinite(lng) || lng < -180 || lng > 180 || !Number.isFinite(lat) || lat < -90 || lat > 90) {
@@ -293,7 +301,15 @@ function exportJson() {
 function locateOnMap() {
   if (!mapObj) return
   locateUser(mapObj,
-    (pos) => { const [mlat, mlng] = toDisplay(mapObj, pos.lat, pos.lng); mapObj.setView([mlat, mlng], 14) },
+    (pos) => {
+      const [mlat, mlng] = toDisplay(mapObj, pos.lat, pos.lng)
+      mapObj.setView([mlat, mlng], 14)
+      form.value.lng = pos.lng.toFixed(6)
+      form.value.lat = pos.lat.toFixed(6)
+      if (pickerMarker) pickerMarker.remove()
+      pickerMarker = L.marker([mlat, mlng]).addTo(mapObj)
+      reverseGeocodeFor(pos.lat, pos.lng)
+    },
     () => { alert(t('locateFail')) }
   )
 }
