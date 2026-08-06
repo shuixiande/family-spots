@@ -35,7 +35,10 @@ function makeTileLayer(provider) {
 export async function initMap(containerId, center, zoom) {
   const [cLat, cLng] = center || DEFAULT_CENTER
   const provider = pickProvider(cLat, cLng)
-  const map = L.map(containerId, { zoomControl: true }).setView(
+  const map = L.map(containerId, {
+    zoomControl: true,
+    scrollWheelZoom: true // 滚轮缩放放大/缩小（双击留作标记，见 MapView dblclick）
+  }).setView(
     toDisplayRaw(provider, cLat, cLng),
     zoom || DEFAULT_ZOOM
   )
