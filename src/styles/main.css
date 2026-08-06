@@ -13,6 +13,17 @@ a { text-decoration: none; color: inherit; }
 .nav-bar .nav-links a { margin-left: 20px; font-size: 15px; color: #666; transition: color 0.2s; }
 .nav-bar .nav-links a:hover, .nav-bar .nav-links a.router-link-active { color: #1890ff; }
 
+/* 顶部操作指南（logo 栏中部） */
+.nav-guide {
+  flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px;
+  font-size: 13px; color: #888; min-width: 0; overflow: hidden; white-space: nowrap;
+}
+.nav-guide .guide-item { color: #555; }
+.nav-guide .guide-sep { color: #ccc; }
+@media (max-width: 760px) {
+  .nav-guide { display: none; }
+}
+
 .lang-btn {
   margin-left: 16px; padding: 4px 10px; font-size: 13px; cursor: pointer;
   border: 1px solid #d9d9d9; border-radius: 14px; background: #fff; color: #555;

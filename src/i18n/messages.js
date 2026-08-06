@@ -10,6 +10,11 @@ export const messages = {
     langZh: '中文',
     langEn: 'EN',
 
+    // 顶部操作指南
+    guideWheel: '滚轮：放大 / 缩小',
+    guideBtn: '缩放按钮：可点',
+    guideDbl: '双击：标记新地点',
+
     // 地图页
     searchPlaceholder: '搜索城市或地点，如 Tokyo / 巴黎 / 公园',
     search: '搜索',
@@ -201,6 +206,11 @@ export const messages = {
     modeLocal: '💾 Local mode: spots are saved only in this browser',
     langZh: '中文',
     langEn: 'EN',
+
+    // 顶部操作指南
+    guideWheel: 'Wheel: zoom in / out',
+    guideBtn: 'Zoom buttons: clickable',
+    guideDbl: 'Double-click: mark a spot',
 
     searchPlaceholder: 'Search a city or place, e.g. Tokyo / Paris / park',
     search: 'Search',

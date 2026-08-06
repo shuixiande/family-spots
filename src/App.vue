@@ -2,6 +2,13 @@
   <div id="app">
       <nav class="nav-bar">
         <router-link to="/" class="logo">🏞️ {{ locale === 'en' ? 'FamilySpots' : '撒欢地图' }}</router-link>
+        <div class="nav-guide">
+          <span class="guide-item">🖱️ {{ $t('guideWheel') }}</span>
+          <span class="guide-sep">·</span>
+          <span class="guide-item">➕ {{ $t('guideBtn') }}</span>
+          <span class="guide-sep">·</span>
+          <span class="guide-item">📍 {{ $t('guideDbl') }}</span>
+        </div>
         <div class="nav-links">
           <router-link to="/">{{ $t('navMap') }}</router-link>
           <router-link to="/list">{{ $t('navList') }}</router-link>
