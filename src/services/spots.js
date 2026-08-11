@@ -116,7 +116,14 @@ export async function createSpot(spot) {
     if (error) throw new Error(error.message)
     return fromDb(data)
   }
-  const obj = { ...spot, id: 'local-' + (globalThis.crypto?.randomUUID?.() ?? (Date.now().toString(36) + Math.random().toString(36).slice(2))), createdAt: new Date().toISOString() }
+  // 本地模式也归一 lat/lng 为数字，与云端 fromDb 的数值类型保持一致（避免依赖隐式强转）
+  const obj = {
+    ...spot,
+    id: 'local-' + (globalThis.crypto?.randomUUID?.() ?? (Date.now().toString(36) + Math.random().toString(36).slice(2))),
+    lat: Number(spot.lat),
+    lng: Number(spot.lng),
+    createdAt: new Date().toISOString()
+  }
   const list = loadLocal(); list.push(obj); saveLocal(list)
   return obj
 }
@@ -141,7 +148,13 @@ export async function updateSpot(id, patch) {
   }
   const list = loadLocal()
   const idx = list.findIndex(s => s.id === id)
-  if (idx >= 0) list[idx] = { ...list[idx], ...patch, id }
+  if (idx >= 0) {
+    list[idx] = {
+      ...list[idx], ...patch, id,
+      lat: patch.lat != null ? Number(patch.lat) : list[idx].lat,
+      lng: patch.lng != null ? Number(patch.lng) : list[idx].lng
+    }
+  }
   saveLocal(list)
   return list[idx]
 }

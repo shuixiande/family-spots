@@ -93,6 +93,8 @@ let mapObj = null
 let osmLayer = null
 let userLayer = null
 let loadTimer = null
+let osmReqId = 0
+let userReqId = 0
 
 function activeCatKeys() {
   return Object.keys(activeCats).filter(k => activeCats[k])
@@ -106,11 +108,11 @@ function filteredUser() {
 }
 
 function renderOsm() {
-  clearLayer(osmLayer)
+  clearLayer(mapObj, osmLayer)
   osmLayer = addOsmMarkers(mapObj, filteredOsm(), onContribute)
 }
 function renderUser() {
-  clearLayer(userLayer)
+  clearLayer(mapObj, userLayer)
   userLayer = addUserMarkers(mapObj, filteredUser(), (s) => router.push('/spot/' + s.id))
 }
 function renderAll() { renderOsm(); renderUser() }
@@ -134,16 +136,20 @@ function toggleCat(key) {
 // 拉取社区标注（云端或本地兜底），按当前视野范围
 async function loadUser() {
   if (!mapObj) return
+  const reqId = ++userReqId
   const b = mapObj.getBounds()
   const sw = fromDisplay(mapObj, b.getSouth(), b.getWest())
   const ne = fromDisplay(mapObj, b.getNorth(), b.getEast())
   const bounds = { s: sw[0], w: sw[1], n: ne[0], e: ne[1] }
-  userSpots.value = await fetchSpots({ bounds })
+  const spots = await fetchSpots({ bounds })
+  if (reqId !== userReqId) return // 已有更新的请求，丢弃过期响应
+  userSpots.value = spots
   renderUser()
 }
 
 async function loadOsm() {
   if (!mapObj) return
+  const reqId = ++osmReqId
   const b = mapObj.getBounds()
   // 视野为显示坐标，转成 WGS-84 再查 Overpass
   const sw = fromDisplay(mapObj, b.getSouth(), b.getWest())
@@ -151,17 +157,19 @@ async function loadOsm() {
   if (ne[0] - sw[0] > 1.2) {
     // 视野过大跳过，避免 Overpass 过量；同时清空旧标记避免残留误导
     osmSpots.value = []
-    clearLayer(osmLayer)
+    clearLayer(mapObj, osmLayer)
     return
   }
   loading.value = true
   try {
-    osmSpots.value = await fetchOsmSpots([sw[0], sw[1], ne[0], ne[1]], 400)
+    const spots = await fetchOsmSpots([sw[0], sw[1], ne[0], ne[1]], 400)
+    if (reqId !== osmReqId) return // 已有更新的请求，丢弃过期响应
+    osmSpots.value = spots
     renderOsm()
   } catch (e) {
-    console.warn('OSM 加载失败：', e)
+    if (reqId === osmReqId) console.warn('OSM 加载失败：', e)
   } finally {
-    loading.value = false
+    if (reqId === osmReqId) loading.value = false // 仅最新请求才能收起加载态
   }
 }
 
@@ -199,11 +207,11 @@ onMounted(async () => {
   mapObj.on('moveend', () => {
     clearTimeout(loadTimer)
     loadTimer = setTimeout(() => {
+      // 先按中心切换瓦片源并重投影视野，确保随后 getBounds() 的坐标语义正确
+      const switched = ensureTileProvider(mapObj)
       loadOsm()
       loadUser()
-      // 中心跨国内外边界时切换瓦片层并重绘标记（坐标需重新转换）
-      const c = mapObj.getCenter()
-      if (ensureTileProvider(mapObj, c.lat, c.lng)) renderAll()
+      if (switched) renderAll()
     }, 700)
   })
 })

@@ -31,8 +31,9 @@ export default defineConfig({
           options: { cacheName: 'map-tiles', expiration: { maxEntries: 500, maxAgeSeconds: 30 * 24 * 3600 } }
         },
         {
-          // Overpass / Nominatim
-          urlPattern: /^https:\/\/(overpass-api\.de|nominatim\.openstreetmap\.org)\//,
+          // 仅 Nominatim 搜索/逆地理编码（GET）。Overpass 为 POST 且查询体不同、
+          // URL 恒定(/api/interpreter)，不应走 SW 缓存，避免离线时不同 bbox 结果互相串数据。
+          urlPattern: /^https:\/\/nominatim\.openstreetmap\.org\//,
           handler: 'StaleWhileRevalidate',
           options: { cacheName: 'osm-api', expiration: { maxEntries: 100, maxAgeSeconds: 7 * 24 * 3600 } }
         },

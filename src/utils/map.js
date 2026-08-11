@@ -48,12 +48,18 @@ export async function initMap(containerId, center, zoom) {
 }
 
 // 中心点跨区域时切换瓦片层。返回是否发生了切换（调用方需据此重绘标记）。
-export function ensureTileProvider(map, lat, lng) {
-  const provider = pickProvider(lat, lng)
+// 切换前先用"旧"坐标系把当前显示中心还原为存储坐标(WGS-84)，再按"新"坐标系重投影，
+// 避免国内(高德 GCJ-02) 与海外(OSM WGS-84) 切换后地图错位、以及视野范围被双重转换。
+export function ensureTileProvider(map) {
+  const oldC = map.getCenter()
+  const [wLat, wLng] = fromDisplay(map, oldC.lat, oldC.lng) // 旧 provider：显示 -> WGS-84
+  const provider = pickProvider(wLat, wLng)
   if (provider === map.provider) return false
   if (map.tileLayer) map.removeLayer(map.tileLayer)
   map.provider = provider
   map.tileLayer = makeTileLayer(provider).addTo(map)
+  const [dLat, dLng] = toDisplayRaw(provider, wLat, wLng) // 新 provider：WGS-84 -> 显示
+  map.setView([dLat, dLng], map.getZoom(), { animate: false })
   return true
 }
 
@@ -121,8 +127,11 @@ export function addUserMarkers(map, spots, onSelect) {
   return group
 }
 
-export function clearLayer(group) {
-  if (group) group.clearLayers()
+// 清空图层组并从地图移除，避免每次重绘累积空 layerGroup（内存泄漏）。
+export function clearLayer(map, group) {
+  if (!group) return
+  group.clearLayers()
+  if (map && group._map) map.removeLayer(group)
 }
 
 // 浏览器定位返回 WGS-84；不自动 setView（由调用方按当前瓦片转换后 setView）。

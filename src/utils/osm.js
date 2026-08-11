@@ -42,19 +42,37 @@ function classify(tags) {
 // bbox: [south, west, north, east]
 export async function fetchOsmSpots(bbox, limit = 300) {
   const [s, w, n, e] = bbox
+  // 查询标签须与 classify() 一一对应：补齐玩水(hot_spring/beach_resort/bay/waterfall)
+  // 与爬山(viewpoint/volcano/mountain/hill/landform) 类别，避免 classify 分支成为死代码。
+  // 注意：不查全部 waterway（河流段数量会瞬间撑爆 limit），仅按需取 waterfall。
   const q = `[out:json][timeout:25];
 (
   node["leisure"="park"](${s},${w},${n},${e});
   node["leisure"="garden"](${s},${w},${n},${e});
   node["leisure"="playground"](${s},${w},${n},${e});
+  node["leisure"="beach_resort"](${s},${w},${n},${e});
   node["boundary"="national_park"](${s},${w},${n},${e});
   node["natural"="water"](${s},${w},${n},${e});
   node["natural"="beach"](${s},${w},${n},${e});
+  node["natural"="hot_spring"](${s},${w},${n},${e});
+  node["natural"="bay"](${s},${w},${n},${e});
   node["natural"="peak"](${s},${w},${n},${e});
+  node["natural"="mountain"](${s},${w},${n},${e});
+  node["natural"="volcano"](${s},${w},${n},${e});
+  node["natural"="hill"](${s},${w},${n},${e});
+  node["tourism"="viewpoint"](${s},${w},${n},${e});
+  node["landform"](${s},${w},${n},${e});
   way["leisure"="park"](${s},${w},${n},${e});
+  way["leisure"="garden"](${s},${w},${n},${e});
   way["leisure"="playground"](${s},${w},${n},${e});
+  way["leisure"="beach_resort"](${s},${w},${n},${e});
   way["natural"="water"](${s},${w},${n},${e});
+  way["natural"="beach"](${s},${w},${n},${e});
+  way["natural"="hot_spring"](${s},${w},${n},${e});
+  way["waterway"="waterfall"](${s},${w},${n},${e});
   relation["boundary"="national_park"](${s},${w},${n},${e});
+  relation["leisure"="nature_reserve"](${s},${w},${n},${e});
+  relation["natural"="water"](${s},${w},${n},${e});
 );
 out center ${limit};`
 

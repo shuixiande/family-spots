@@ -56,7 +56,7 @@
       </div>
 
       <div class="form-section">
-        <h3>{{ $t('safety') }}</h3>
+        <h3>{{ $t('safetyAssess') }}</h3>
         <div class="form-row">
           <div class="form-group">
             <label>{{ $t('riskLevel') }} *</label>
@@ -230,7 +230,10 @@ async function saveSpot() {
     saveMsg.value = t('needCoord'); return
   }
   const r = form.value.rating
-  if (typeof r === 'number' && (r < 1 || r > 5)) { saveMsg.value = t('invalidRating'); return }
+  // 评分可选：空值('')视为未填写 -> 落库 null；有值时必须落在 1-5
+  if (r !== '' && r != null && (Number(r) < 1 || Number(r) > 5)) {
+    saveMsg.value = t('invalidRating'); return
+  }
   try {
     if (editingId.value) {
       await updateSpot(editingId.value, buildPayload())

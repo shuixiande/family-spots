@@ -11,6 +11,8 @@
 --   alter table public.spots drop constraint if exists spots_risk_level_check;
 --   alter table public.spots add  constraint spots_risk_level_check check (risk_level in ('','low','mid','high'));
 --   alter table public.spots alter column kid_friendly set default true;
+-- 新增语句均为幂等(create index if not exists / create or replace + drop/create)，
+-- 对已部署的旧库整文件重跑即可生效（含 spots_lat_lng_idx 索引与 write_log 登录提示）。
 
 -- 1) 表结构（camelCase 应用字段 <-> snake_case 列）
 create table if not exists public.spots (
@@ -45,6 +47,8 @@ alter table public.spots add column if not exists status text not null default '
 create index if not exists spots_category_idx on public.spots (category);
 create index if not exists spots_created_at_idx on public.spots (created_at desc);
 create index if not exists spots_created_by_idx on public.spots (created_by);
+-- 视野范围查询(lat/lng between)索引，避免全表扫描
+create index if not exists spots_lat_lng_idx on public.spots (lat, lng);
 
 -- 版主表与判定函数（版主可审核/下架任意地点）
 create table if not exists public.moderators (
@@ -115,6 +119,10 @@ returns trigger language plpgsql security definer as $$
 declare
   cnt int;
 begin
+  -- 未登录直接给出友好提示；否则 write_log(user_id) NOT NULL 会把登录要求掩盖成列约束报错
+  if auth.uid() is null then
+    raise exception '请先登录后再标记地点';
+  end if;
   select count(*) into cnt from public.write_log
    where user_id = auth.uid() and created_at > now() - interval '1 hour';
   if cnt >= 20 then

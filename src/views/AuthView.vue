@@ -59,9 +59,9 @@ async function submit() {
   msg.value = ''
   try {
     if (isSignUp.value) {
-      // 勾选 agreeGuardian 即同意当前版本条款，注册成功时记录
-      recordLegalConsent()
+      // 先完成注册；注册成功(未抛错)后才记录条款同意，避免失败时误写同意记录
       const data = await signUpWithEmail(email.value, password.value)
+      recordLegalConsent()
       if (data.session) router.push(route.query.redirect || '/')
       else msg.value = t('checkEmail')
     } else {
